@@ -1,3 +1,8 @@
+import math
+import re
+from KlasaDecyzyjna import KlasaDecyzyjna
+
+
 class SystemDecyzyjny:
     NUMBER_OF_ATTRIBUTES = 15
 
@@ -28,6 +33,56 @@ class SystemDecyzyjny:
                 array.append(self[x][i])
             print("attribute", i, "max value", max(array))
 
+    def separateClasses(self):
+        result = []
+        for i in self:
+            result.append(i[0:3])
+        return result
+
+    def sortAttrToSpecifiedClass(listOfClasses, listOfAttributes):
+        result = []
+        listIteration = 0
+        for i in listOfClasses:
+            x = KlasaDecyzyjna()
+            x.setKlasaDecyzyjna(i)
+            attributes = SystemDecyzyjny.switchColumnsToRows(listOfAttributes)
+            x.setAttributes(attributes[listIteration])
+            listIteration += 1
+            result.append(x)
+        return result
+
+    def switchColumnsToRows(self):
+        result = []
+        for x in range(len(self[0])):
+            row = []
+            for i in range(len(self)):
+                row.append(self[i][x])
+            result.append(row)
+        return result
+
+    def average(self):
+        sum = 0
+        for i in self:
+            sum = sum + float(i)
+        return sum / len(self)
+
+    def numberOfAttributesInClass(classes, numeric):
+        for i in range(len(classes)):
+            print(KlasaDecyzyjna.getKlasaDecyzyjna(classes[i]), "has", len(KlasaDecyzyjna.getAttributes(classes[i])),
+                  "attributes")
+
+    def standardDeviation(classes, numeric):
+        for i in numeric:
+            standDevList = KlasaDecyzyjna.getAttributes(classes[i])
+            standDevAvg = SystemDecyzyjny.average(standDevList)
+            sum = 0
+            for j in standDevList:
+                xi = float(j) - standDevAvg
+                xi2 = xi * xi
+                sum = sum + xi2
+            standDev = math.sqrt(sum / len(standDevList))
+            print(KlasaDecyzyjna.getKlasaDecyzyjna(classes[i]), "standard deviation:", standDev)
+
     def splitIntoLines(self):
         return re.split(r'\n', self)
 
@@ -46,6 +101,13 @@ def main():
     lines = SystemDecyzyjny.listAttributesAndTheirNumbers(open("australian.txt").read())
     SystemDecyzyjny.minAttributeValue(lines, SystemDecyzyjny.getNumericAttributes(array))
     SystemDecyzyjny.maxAttributeValue(lines, SystemDecyzyjny.getNumericAttributes(array))
+    SystemDecyzyjny.switchColumnsToRows(SystemDecyzyjny.listAttributesAndTheirNumbers(open("australian.txt").read()))
+    classes = SystemDecyzyjny.sortAttrToSpecifiedClass(SystemDecyzyjny.separateClasses(array),
+                                                       SystemDecyzyjny.listAttributesAndTheirNumbers(
+                                                           open("australian.txt").read()))
+    SystemDecyzyjny.numberOfAttributesInClass(classes, SystemDecyzyjny.switchColumnsToRows(
+        SystemDecyzyjny.listAttributesAndTheirNumbers(open("australian.txt").read())))
+    SystemDecyzyjny.standardDeviation(classes, SystemDecyzyjny.getNumericAttributes(array))
 
 
 if __name__ == "__main__":
