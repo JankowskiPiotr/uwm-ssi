@@ -1,6 +1,6 @@
-import math
+﻿import math
 import re
-from KlasaDecyzyjna import KlasaDecyzyjna
+from KlasaDecyzyjna import KlasaDecyzyjna 
 
 def unique(list1):
     unique_list = []
