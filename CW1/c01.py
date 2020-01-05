@@ -3,6 +3,13 @@ import re
 from KlasaDecyzyjna import KlasaDecyzyjna
 
 
+def unique(list1):
+    unique_list = []
+    for x in list1:
+        if x not in unique_list:
+            unique_list.append(x)
+    return unique_list
+
 class SystemDecyzyjny:
     NUMBER_OF_ATTRIBUTES = 15
 
@@ -94,6 +101,8 @@ class SystemDecyzyjny:
         return myArray
 
 
+
+
 def main():
     SystemDecyzyjny.printFile("australian-type.txt")
     array = SystemDecyzyjny.splitIntoLines(open("australian-type.txt").read())
@@ -107,6 +116,12 @@ def main():
                                                            open("australian.txt").read()))
     SystemDecyzyjny.numberOfAttributesInClass(classes, SystemDecyzyjny.switchColumnsToRows(
         SystemDecyzyjny.listAttributesAndTheirNumbers(open("australian.txt").read())))
+    for elem in classes:
+        print("Różne wartości dla decyzji "+ elem.getKlasaDecyzyjna()+": ")
+        print(unique(elem.getAttributes()))
+    for elem in classes:
+        print("Wszystkie wartości dla decyzji "+ elem.getKlasaDecyzyjna()+": ")
+        print(*elem.getAttributes())
     SystemDecyzyjny.standardDeviation(classes, SystemDecyzyjny.getNumericAttributes(array))
 
 
