@@ -2,7 +2,6 @@ import math
 import re
 from KlasaDecyzyjna import KlasaDecyzyjna
 
-
 def unique(list1):
     unique_list = []
     for x in list1:
@@ -99,8 +98,6 @@ class SystemDecyzyjny:
         for line in lines:
             myArray.append(line.split(" "))
         return myArray
-
-
 
 
 def main():
