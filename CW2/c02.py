@@ -7,7 +7,8 @@ class NaiwnyKlasyfikatorBayesa():
         australianTRNList = Common.listAttributesAndTheirNumbers(open("australian_TRN.txt").read())
         lines = Common.delLastColumnAndRow(lines)
         australianTRNList = Common.delLastColumnAndRow(australianTRNList)
-
+        getTrnDecisions = Common.getIndexOfDecision(australianTRNList)
+        getDecisions = Common.getIndexOfDecision(lines)
 
 if __name__ == "__main__":
     NaiwnyKlasyfikatorBayesa.main("args")
